@@ -1,0 +1,2 @@
+LANG=CRW1=asm auto break case catch cdecl char class const continue _cs default delete do double _ds else enum _es _export extern far float for friend goto huge if inline int interrupt _loadds long near new operator pascal private protected public 
+registerRW2=_regparam return _saveregs _seg short signed sizeof _ss static struct switch template this typedef union unsigned virtual void volatile while define ifdef ifndef undefine include endif elseSYM={}[]().=+-*/:;<>|&#,~!^?OC1=/*CC1=*/EOL=//STR='"LIT=\\CS=1

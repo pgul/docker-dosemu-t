@@ -1,0 +1,311 @@
+Multi-Edit Version 6.10
+
+Hi there!  This file contains important notes, additions and changes to
+the printed manual, known bugs, and information about converting
+Version 5 macros to Version 6.
+
+NOTE:  All additional .DOC files are stored in the subdirectory DOC\.
+
+
+CONVERTING YOUR SETUP FROM 5.0 or 6.0 TO 6.1
+	You must first install version 6.1 in a DIFFERENT directory
+	than the previous version.  To run the 6.1 conversion macro,
+	you must have installed it from the distribution disks, and
+	then (after you have exited from Installation and Setup) run
+	the macro CONV_610.
+
+TECH SUPPORT
+	The preferred way to report bugs and get tech support is via
+	our Compuserve Forum section 11 in PCVENE (GO CYBERNET).
+
+	If you do not have access to a modem, then please feel free to
+	call us here at 602-968-1945, and ask for Tech-Support.
+
+ALL THE NEW 6.1 STUFF
+	There is an extensive list of new features and changes in
+	NEW61.DOC.
+
+THE NEW TEMPLATE LANGUAGE
+	Much of our language specific template expansion is now done in
+	a special "template language" that allows easy user changes.
+	This "language" is explained in detail in TEMPLATE.DOC.
+
+CONFIGURING C INDENT AND TEMPLATE STYLES
+	You can modify the C indenting and template expansion to a
+	couple of common styles very quickly by changing a couple of
+	#defines near the top of C.S (right after the header that
+	describes what macros are in the file).   The #defines are
+	commented.
+
+VERSION CONTROL SYSTEM SUPPORT (Professional version only)
+	The VCS macro provides support for Burton Systems TLIB,
+	Intersolve's PVCS, Mortice Kern Systems's RCS (also generic
+	UNIX RCS) and Solution Systems' Sourcerer's Apprentice.  The
+	main VCS macro is called "VCS" and can be assigned to a key,
+	run from the USER MENU or run from the RUN MACRO prompt.  It is
+	installed from the MACRO SOURCE disk.
+
+	To invoke VCS support after installing from the MACRO SOURCE
+	disk run the macro VCS, and select INSTALLATION AND
+	SETUP from the menu that pops up.  You'll be prompted for the
+	Version Control System you want, and your STARTUP files will be
+	automatically modified.
+
+	All of the documentation for the VCS support is in the online
+	help, so simply hit <F1> from the VCS menu to get started.
+
+	NOTE:  VCS has already been added to your User menu
+
+BRIEF KEYMAP
+	There is some additional info on the new BRIEF emulation macro
+	in BRIEF.DOC.
+
+CLIPPER USERS
+	We have recently improved the DBASE language support to include
+	support for the Clipper version 5 dialect.  This includes
+	support for "While" instead of "DO While", "End" instead of
+	"Endxx", and C style comments "/* */" and "//".  To enable
+	these capabilities, you must place the following line in the
+	STARTUP.S file:
+
+		Set_Global_Int('!DBASE_DIALECT',1);
+
+	Then you must recompile STARTUP.S.  See the manual for
+	details on compiling macros.
+
+MICROSOFT WINDOWS 3.0, OS/2, DESQview
+	Multi-Edit works best as a FULL-SCREEN application under
+	WINDOWS.  There is a 'PIF' file for use in WINDOWS in the
+	Multi-Edit subdirectory (also included is the file ME.ICO,
+	which is a Multi-Edit ICON for Windows 3.0).  Multi-Edit also
+	works fine in the DOS compatibility box of OS/2 and under
+	DESQview.
+
+	For DESQview, set the "Writes directly to screen" and
+	"Virtualize Text/Graphics" options to "N" (this is done inside
+	DESQview).  The Multi-Edit "/D" command line option must NOT be
+	used in this case (if /D is used, both questions should be set
+	to "Y").  Also, be sure to NOT set the protection level (in the
+	Advanced Setup Screen of DESQview) greater than 1.
+
+	NOTE:  You should allocate at least 350K (preferably 400K) of
+	RAM to Multi-Edit when running from WINDOWS or DESQview.
+
+PC-KWIK
+	There may be an incompatibility between this caching program and
+	Multi-Edit's disk swapping management routines.  Report is that
+	their version 1.58 works fine with Multi-Edit.  Some versions
+	may require the use of the L- switch in order to work properly.
+	Note that some versions of PC-KWIK are also incompatible with
+	WINDOW's HIMEM.SYS program.
+
+COREFAST
+	The CFTIME scheduler used with this CORE backup utility is not
+	compatible with Multi-Edit.
+
+DOS PRINT & MODE
+	These DOS commands affect the current state of memory, and like
+	all "TSR's", must NOT be run for the first time when shelled out
+	of Multi-Edit.  They must be "loaded" before invoking
+	Multi-Edit, and then can be run from within the editor.
+
+USER MENU
+	Multi-Edit is shipped with a number of macros already on the
+	User Menu.  They may be deleted and/or additional programs
+	added.
+
+	NoteBook:  Our cool note organizer.
+
+	Convert keystroke macro to macro source code:
+		This macro lets you convert keystroke macros to KEY_IN
+		statements in the macro language.  See the MACRO
+		LANGUAGE REFERENCE GUIDE for detailed information on
+		KEY_IN.
+
+	List unassigned keys in EDIT mode:
+		This is real handy when you want to assign keys for
+		your own Keystroke or other macros.  Tells what keys
+		are available.
+
+	Phone - Address list:
+		Check out the little phone/address directory we threw
+		in.
+
+	Version Control Support:
+		See the notations on VCS above.
+
+
+KEYSTROKE MACROS
+	MULTI-EDIT IS SHIPPED WITH TWO KEYSTROKE MACROS:
+
+		Ruler
+		Capitalize all letters on current line
+
+DATAFLEX
+	To compile with Dataflex you must use the provided batch file
+	DFLEX.BAT for your compile command line.  For example:
+		DFLEX <FILE> <EXT>
+	Make sure the CR/LF at eof is turned ON. You will find this
+	toggle in the Edit Settings sub-menu of the Install menu.
+	While you are in the Install menu, create a Filename Extension
+	setup and compiler setup for Dataflex.
+
+CLARION
+	To compile with CLARION you must use the provided batch file
+	CLARC.BAT for your compile command line.  For example:
+		CLARC <FILE>
+	(The CLARC.BAT file assumes a .CLA extension)
+
+ALSYS ADA
+	To compile with ALSYS ADA you must use the provided batch file
+	ADACOMP.BAT for your compile command line.  For example:
+		ADACOMP <FILE>
+	(The ADACOMP.BAT file assumes a .ADA extension)
+
+
+	If you use a BATCH file to compile, you will probably have to
+	add <NR> to your command line (in Filename Extension Setup -
+	Install-Filename extension-F3-Compiler/prog setup) where you
+	specify the Batch file, to avoid double re-direction.
+
+HISTORY LISTS
+	We added a last-minute configuration option for history lists.
+	If you add the following global integer to your STARTUP macro,
+	you can set the maximum length of the history list:
+
+		Set_Global_Int("@HISTORY_LENGTH",15);
+
+	The value of 15 shown above is the default.  Any value greater
+	than 0 is legal.
+
+		     CONVERTING 5.0 MACROS TO 6.0
+
+We have converted all of our macros to the new CMAC syntax.  If you
+chose to do so, the macro SRCCONV will do most of the conversion for
+you.  You MUST install SRCCONV from the Help / Languages / Keymaps /
+Other section of Module Installation.
+
+MEMAC is still supported, BUT we can not guarantee that it will
+continue to be supported in future major releases.
+
+NOTE:  The system function calls between MEMAC and CMAC are identical.
+
+
+There are a few changes to the system function calls (from 5.0 to 6.0)
+that may effect your macros:
+
+        TOGGLE_VIDEO            No longer exists!!!!
+
+        VIDEO_MODE              Returns an integer:
+                                0 = 25 lines
+                                1 = 30/33 lines
+                                2 = 43/50 lines
+
+                                255 = #of lines overridden with /X /Y
+                                      switches.
+	SET_VIDEO_MODE( mode )  New!!
+				0 = 25 lines
+				1 = 30/33 lines
+				2 = 43/50 lines
+
+				Should NOT be used, instead use the
+				macro
+					SETUP^TGLVID /M=n
+				where "n" is the video mode to switch
+				to!
+
+	BLOCK_STAT is now a variable.
+
+	PERSISTENT_BLOCKS	If your macro relies on a block
+				remaining on while the cursor is moved,
+				then you need to save the old status of
+				PERSISTENT_BLOCKS, set it to TRUE, and
+				then restore it when you are done.  See
+				the docs for more info on
+				PERSISTENT_BLOCKS.
+
+	NEW 6.10 SYSTEM MACRO FUNCTIONS, VARIABLES AND CONSTANTS
+
+The following keys are now available in order to access shifted
+mouse buttons:
+
+	<ShiftMEVENT>   <CtrlMEVENT>   <AltMEVENT>
+	<ShiftMEVENT2>  <CtrlMEVENT2>  <AltMEVENT2>
+	<ShiftMEVENT3>  <CtrlMEVENT3>  <AltMEVENT3>
+
+MOU_DOUBLE_CLICK
+MENU_CREATE
+MENU_DELETE
+MENU_SET_ITEM
+MENU_SET_STR
+MENU_SET_INT
+MENU_ITEM_STR
+MENU_ITEM_INT
+LINE_ATTR
+L_COLOR
+LB_COLOR
+W_L_COLOR
+W_LB_COLOR
+GET_MARK_RECORD
+SET_MARK_RECORD
+MARK_STACK_COUNT
+MAKE_LITERAL
+PERSISTANT_BLOCKS
+KEYWORD_CLINE_OVERRIDE
+KEYWORD_HIGHLIGHTING
+KEYWORDS_STR
+SET_KEYWORDS
+
+
+
+			  K N O W N   B U G S
+
+
+	    ÄÄÄ¿       ³       ÚÄÄ
+	       ³       ³       ³
+	       ³       ³       ³                  /
+	   ÚÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄ¿  ÚÄÄÄÄÄÄ¿  /
+	   ³                       ÃÄÄ´     ³/
+	 ÄÄ´ Don't Tread On Me...  ³  ³      ³
+	   ³                       ÃÄÄ´     ³\
+	   ÀÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÙ  ÀÄÄÄÄÄÄÙ  \
+	       ³       ³       ³                  \
+	       ³       ³       ³
+	     ÄÄÙ       ³       ÀÄÄ
+
+
+MULTI-FILE SEARCH SWITCHES
+	Multi-File search switches effect regular search switches.
+	i.e., if you have regular expressions turned off by default,
+	then you do a Multi-File search with expressions turned on, the
+	normal search dialog box will show regular expressions as being
+	on.  This is not actually a bug, as the change to the defaults
+	is necessary in order for the "Repeat Previous Search" function
+	to work in conjunction with Multi-File search.
+
+<CtrlShft> AND <AltShft> KEY COMBINATIONS On some keyboards, not all
+        keys may be able to be used with the <CtrlShft> and <AltShft>
+        combinations.  This is due to differences in various
+        manufacturers BIOS.  We will try to get all of the
+        possibilities in as we find out about them.  The /KX switch
+        will disable capturing INT 9.  This will disable all of the
+        CtrlShft and AltShft keys, and the ShftGreyArrow keys.
+        However, it may solve some compatibility issues.
+
+<CtrlShft> AND <AltShft> MOUSE BUTTON COMBINATIONS
+	<CtrlShft> and <AltShft> mouse button combinations are not
+	currently supported.
+
+OS/2
+	It has been reported that when you run Multi-Edit on some
+	configurations of OS/2, it may take as long as 25 seconds for
+	it to load.  Of all the reported cases so far, the use of the
+	/KN command line switch fixes the problem.
+
+DIRECTORY LIST LIMITATION
+	Directory lists in the File Manager and File Load/Save prompts
+	are limited to 600 entries.  The reason for this is that in
+	order to keep the display and sorting fast enough to be
+	acceptable for most users, the memory block used for a
+	directory list must be confined to one data segment, which
+	happens to equate to approximately 600 entries.

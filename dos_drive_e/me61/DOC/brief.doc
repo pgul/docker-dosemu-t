@@ -1,0 +1,22 @@
+		       New Brief Emulation Macro
+
+When using the Brief keymap:
+
+	Block operations now unmark blocks when they are copied/moved
+	to the hidden buffer or written to disk.
+
+	Block paste operations now do not leave the pasted text marked.
+
+	Tab now indents/undents blocks multiple times and does not end 
+	the block.  Also when using a columnar block indenting/ 
+	undenting of the block take take place at the left edge of the 
+	block.
+
+	The delete key will delete the currently marked block.
+
+	One can now switch blocking modes (stream, columnar, line)
+	without having to turn the block off first.
+
+	Searching within a block has been improved and will also flip 
+	the anchor point of the block to keep repeated searches 
+	confined within the block.

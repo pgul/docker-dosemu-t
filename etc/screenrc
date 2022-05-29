@@ -1,0 +1,8 @@
+#escape ""
+defc1 off
+defgr off
+defbce off
+#defencoding CP1251
+defutf8 on
+cjkwidth off
+width -w 80

@@ -1,0 +1,139 @@
+                     New Template Expansion Method
+
+Templates for C, CMAC  and Pascal are kept  in global variables.   The name
+of the global variable is '!<LANG_TYPE>.TMPLT0' where <LANG_TYPE> is up  to
+the first three characters  of the language type.   The global string  will
+contain all  of the  templates for  the corresponding  language type.   The
+global   variable    will   be    initialized   in    the   macro    called
+'<LANG_TYPE>^<LANG_TYPE>SETX' which is called every time a file is  loaded.
+The  global  variable  will  contain  the  text  for  the expansion and any
+formating characters as follows:
+
+    'îC=' = Expansion case type.
+              0 = case sensitive.    Keyword  - case sensitive
+                                    Expansion - verbatim.
+              1 = case insensitive.  Keyword  - case insensitive
+                                    Expansion - All caps.
+              2 = case insensitive.  Keyword  - case insensitive
+                                    Expansion - First letter caps.
+              3 = case insensitive.  Keyword  - case insensitive
+                                    Expansion - dependent on keyword.
+    'îM=' = Minimum number of characters in keyword required for an
+              expansion to occurr.
+	238 - 'î' = Parameter delimiter
+	127 - '' = Field separator
+	 20 - '' = Carriage return (Run CR macro)
+	174 - '®' = Carriage return (Goto starting column)
+	196 - 'Ä' = Record cursor position
+	 17 - '' = Move cursor left
+	 16 - '' = Move cursor right
+	 24 - '' = Move cursor up
+	 25 - '' = Move cursor down
+	 64 - '@' = Translate next character literally
+	168 - '¨' = Remember current column position
+	173 - '­' = Goto remembered column number
+	240 - 'ğ' = Goto starting column
+	241 - 'ñ' = Toggle Insert mode
+	251 - 'û' = Run macro:  "/*ûC^CCOMMENT"
+	252 - 'ü' = Expand template for preceding character (be careful about
+			infinite loops)
+	237 - 'í' = Do nothing (used to stop 'keyword' interpretation)
+	242	-	'ò' = Indent and set indent level
+	243	-	'ó' = Undent and set indent level
+
+The  following  is  an  example  global  variable  template setup for the C
+language  found  in   the  extension  setup   macro  for  the   C  language
+('C^CSETX'):
+
+	Set_Global_Str("!C.Tmplt0", "îC=0îM=3"+
+	"/*ûC^BuildCMT"+           /* îC=0 case sensitive */
+	"//"+                      /* îM=1 minimum expansion of 1 character */
+	"#define "+
+	"#else"+
+	"#elif "+
+	"#eilf "+
+	"#endif"+
+	"#error "+
+	"#include <Ä>"+
+	'#i"nclude Ä"'+
+	'#i<nclude Ä>'+
+	"#if "+
+	"#ifdef "+
+	"#idfef "+
+	"#ifndef "+
+	"#pragma "+
+	"#undef "+
+	"break;"+
+	"case Ä:"+
+	"continue;"+
+	"do ü while ( Ä );"+
+	"default:"+
+	"else"+
+	"eilse f ( Ä ) ü"+
+	"extern Ä;"+
+	"for ( Ä ) ü"+
+	"if ( Ä ) ü"+
+	"goto Ä;"+
+	"return Ä;"+
+	"switch ( Ä ) ¨ü­case :"+
+	"struct Ä ü;"+
+	"typedef Ä;"+
+	"union Ä ü;"+
+	"while ( Ä ) ü"+
+	"{¨®}­" +
+
+// FOR  if ( ) {
+//      }
+	"ñ{ñ®}"
+
+// FOR  if ( )
+//			 {
+//			 }
+//	"®ñ{ñ®}"
+
+	);
+
+The  old  method  of  template  expansion  will  still  be  supported.  The
+following  list  is  the  minimum  number  of characters required to expand
+templates in the C, CMAC and PASCAL language types:
+
+            C Language                              CMAC Language
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·      ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+³Template       Minimun expansionºÛ     ³Template       Minimun expansionºÛ
+ÆÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹Û     ÆÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹Û
+³/*             /                ºÛ     ³/*		/	         ºÛ
+³#define        #d               ºÛ     ³#define	#d               ºÛ
+³#else          #e               ºÛ     ³#include	#i               ºÛ
+³#elif          #ei              ºÛ     ³break		b                ºÛ
+³               #eli             ºÛ     ³case		c                ºÛ
+³#endif         #en              ºÛ     ³continue	co               ºÛ
+³#error         #er              ºÛ     ³default	de               ºÛ
+³#include       #i               ºÛ     ³do		d                ºÛ
+³               #i<              ºÛ     ³else		e                ºÛ
+³               #i"              ºÛ     ³else if	ei               ºÛ
+³#ifdef         #id              ºÛ     ³for		f                ºÛ
+³               #ifd             ºÛ     ³goto		g                ºÛ
+³#ifndef        #ifn             ºÛ     ³if		i                ºÛ
+³#pragma        #p               ºÛ     ³macro		m                ºÛ
+³#undef         #u               ºÛ     ³parse_int	pi               ºÛ
+³break          b                ºÛ     ³parse_str	ps               ºÛ
+³case           c                ºÛ     ³switch		s                ºÛ
+³continue       co               ºÛ     ³while		w                ºÛ
+³do             d                ºÛ     ÔÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼Û
+³default        de               ºÛ       ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+³else           e                ºÛ                PASCAL Language
+³else if        ei               ºÛ     ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+³               else i           ºÛ     ³Template       Minimun expansionºÛ
+³extern         ex               ºÛ     ÆÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹Û
+³for            f                ºÛ     ³begin          b                ºÛ
+³if             i                ºÛ     ³case           c                ºÛ
+³goto           g                ºÛ     ³for            f                ºÛ
+³return         r                ºÛ     ³function       fu               ºÛ
+³switch         s                ºÛ     ³if             i                ºÛ
+³struct         st               ºÛ     ³procedure      p                ºÛ
+³typedef        t                ºÛ     ³program        prog             ºÛ
+³union          u                ºÛ     ³               pg               ºÛ
+³while          w                ºÛ     ³repeat         r                ºÛ
+³{}             {                ºÛ     ³while          w                ºÛ
+ÔÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼Û     ÔÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼Û
+  ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß       ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß

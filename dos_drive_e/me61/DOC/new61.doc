@@ -1,0 +1,683 @@
+
+	       NEW FEATURES FOR 6.1 AND CHANGES FROM 5.0
+
+NEW VIRTUAL MEMORY MANAGER
+	This is the most significant change.  We've completely
+	re-written the virtual memory management.  It should be
+	significantly faster, creates only one swap file, and will use
+	XMS or EMS memory.  Also, UNDO is virtual!   See the "Swapping
+	/ EMS / XMS" submenu in "Install".
+
+CMAC C-Like Macro Language!!
+	We did it.  CMAC will be replacing MEMAC (though MEMAC will
+	still be shipped in order to maintain compatibility).  The
+	macro SRCCONV will convert a MEMAC macro source file to CMAC.
+
+SYNTAX HIGHLIGHTING!!
+	Gives you the ability to color-code language-specific reserved 
+	words, symbols, strings, and comments.  Now you can quickly 
+	scan through your source code and identify the highlighted 
+	elements.
+
+EXTENSION SETUP
+	You can now place as many file extensions as you wish in each 
+	extension record, so long as you separate each with a space, 
+	semicolon or comma.
+
+DIRECTING STANDARD OUTPUT TO A WINDOW
+	You will see in the Compiler setups, the "Display" section.
+	Selecting "In Window" will allow you to see the output of your
+	compiler WHILE it is still being directed to a file.
+
+C SMART INDENT
+	The C smart indent macro has been changed to support this code
+	style:  if ( !Work )
+                { SayByeBye();
+		  Reboot();
+                }
+
+FKEY-LABEL DELAY CONFIGURATION
+	By popular demand!!!!  You can configure the delay time for the
+	fkey-label <Shft,Ctrl,Alt> changes from the Display Setup box.
+
+AUTO-TEMPLATE EXPANSION CONFIGURATION
+	We've added a checkbox in filename extension setup to control
+	auto-template expansion with the spacebar.
+
+UNLIMITED REDO!!!!
+	No more "Redo JUST your last Undo"!  Now redo will undo your
+	all of your undos until you start making text changes again!
+
+COOL MOUSE STUFF
+	You can now click and drag marked text (yes, just like Word for
+	Windows 2.0).  Mark a block, click and hold the left mouse
+	button on any position INSIDE the marked block.  Now drag the
+	mouse cursor to the position you want to move the block to.
+	Notice the changed cursor.  Now release the mouse button, and
+	the block will be moved to that position.  If you wish to
+	merely COPY the block, do the same thing with the RIGHT mouse
+	button.
+
+	By assigning <ShftMEVENT> to CUA_Shft_Button, you will get the
+	ability to extend blocks, and mark to the current cursor
+	position.  For example,  without having a block marked, point
+	to any position on the screen and press Shift-LeftButton.  A
+	block should be marked from the old cursor position to the new
+	one.  Now, leaving that block marked, you can extend it by
+	pointing farther in the text, and pressing Shift-LeftButton.
+
+	True double clicking.   The macro function MOU_DOUBLE_CLICK
+	will return true if the mouse is double clicked.  This is
+	checked AFTER you have already detected a mouse press:
+
+		read_key;
+		IF (key1 = 0) AND (key2 = 250) THEN
+		  IF MOU_DOUBLE_CLICK THEN
+		    Make_Message('Double click!');
+		  END;
+		END;
+
+	Double clicking on a word in a window will cause that word to
+	be marked as a block.  Triple clicking will cause the whole
+	line to be marked.
+
+	The following keys are now available in order to access shifted
+	mouse buttons:
+
+		<ShiftMEVENT>   <CtrlMEVENT>   <AltMEVENT>
+		<ShiftMEVENT2>  <CtrlMEVENT2>  <AltMEVENT2>
+		<ShiftMEVENT3>  <CtrlMEVENT3>  <AltMEVENT3>
+
+	We've expanded the Mouse setup so that you can set the cursor
+	type and attributes.
+
+
+IMPROVED AUTO-ARRANGE-ERROR-WINDOW HANDLING
+	Now when you delete the window that the error window is
+	attached to, the error window will be deleted also.  In
+	addition, when toggling screen layouts or when changing video
+	modes, the error window should remain properly attached to the
+	parent window.  Also, the error window is NOT switched to with
+	the normal Next/Prev window commands.
+
+ADDED "TOGGLE SCREEN LAYOUT" and "CLOSE ALL WINDOWS" to Window menu.
+
+ADDED "SAVE ALL FILES" to File menu.
+
+METACOMMANDS
+	The <FILE>, <PATH>, etc. metacommands may now be imbedded in
+	the filename extension specific default path field.
+
+	The macro PATHSEARCH now expands metacommands in the passed
+	path before doing the search.
+
+	Also, the following metacommands have been added:
+
+	<%str>	is expanded out to the value of environment variable
+		"str".
+
+		For example, <%PATH> would insert your current DOS PATH
+		environment variable into the field.
+
+	<~str>	is now expanded out to the value of Global_Str( str ).
+		For example, <~!HELP_PATH> would insert the value of
+		Global_Str("!HELP_PATH") into the field.
+
+
+ENHANCED KEYBOARD ANOMALIES
+	I believe that there are some anomalies with certain enhanced
+	keyboard bios.  This mostly affects the CtrlShft, AltShft and
+	ShftGreyCursor keys.  If you have keyboard problems, please
+	report to American Cybernetics, Inc. the computer and bios type
+	you are using.
+
+	Added /KX switch to disable capturing INT 9.  This will
+	disable all of the CtrlShft and AltShft keys, and the
+	ShftGreyArrow keys.  However, it may solve some compatibility
+	issues.
+
+FASTER STARTING SPEED!  TAKES LESS SPACE!
+	We've been doing a LOT of work on making Multi-Edit start
+	faster and take less space.  We've redesigned the .MAC file
+	format, the help file format AND restructured the overlay
+	system.  The following changes are quite significant, but we
+	think well worth it!
+
+NEW COMPILED MACRO STRUCTURE
+	We've restructured the .MAC file format for significantly
+	faster loading AND we've created a new macro library file
+	called ME.MCL.  It is loaded upon starting Multi-Edit and
+	contains most of the Multi-Edit system macros.  Don't be
+	mislead though:  ME.MCL loads significantly faster than the
+	original MESYS.MAC!
+
+	IMPORTANT:  This changes the way modifications to system macros
+	are made!  When you make a change to any of the macro files
+	that are included in ME.MCL, the change will go into effect
+	immediately for your current session.  However, in order for
+	the change to be in effect the next time you start Multi-Edit,
+	you MUST merge the system macros together into ME.MCL. We've
+	included a new utility called MACMERGE.EXE that allows you to
+	merge .MAC file together.  This is how ME.MCL is created, and
+	we've included MEMCL.BAT to automate the process.  The system
+	macros that are merged together are listed in MEMCL.BAT.
+
+
+NEW COMPILED HELP FILE FORMAT
+	We've completely redesigned the format of compiled help files.
+	.HLX files are no longer used, they've been replaced by .HLZ
+	files.  We've incorporated LZH compression directly into the
+	help system and can now achieve compression ratios from 55 to
+	70 percent under the size of the .HLP text files.  The old .HLX
+	file formats best compression ratios were between 30 and 40
+	percent.
+
+	The new help file compiler is called HELPCX.EXE and the new
+	decompiler is HELPDX.EXE.  Compiling of the help files is
+	significantly slower than the original HELPCMPX, but the
+	compression ratios are so much better, we feel it is worth it!
+	We may be able to improve the speed later.
+
+ZOOM BY DOUBLE-CLICKING TOP WINDOW BORDER
+	You can maximize (or bring back to the old state) a window by
+	double clicking on its top border.
+
+NEW CUA STYLE KEYMAP
+	We have a new keymap (CUAME.DB).  You can still use the old one
+	(KEYMAP.DB).
+
+COMMUNICATIONS MODULE
+	The menu and status lines were completely redone and were
+	combined, freeing up another line for the terminal screen.
+	One difference is that you can no longer configure the status
+	line to appear at the bottom.   There have some other misc
+	changes and bug fixes.
+
+EDIT menu
+	We've added a CUA compliant EDIT menu.  Some items have been
+	moved from the Block and Text menus.
+
+NON-PERSISTENT BLOCKS
+	We've added a switch to turn persistent blocks off.  You can
+	toggle it in the Block menu and in the Install-->User-interface
+	setting menu.  There are all sorts of implications to having
+	block persistence off, so here we go:
+
+	After marking a block, once you move your cursor, the block
+	will go away.
+
+	The macro integer variable "persistant_blocks" has been added.
+	When TRUE(1), blocks are persistent.  !!!!NOTE:  Any macros
+	that you have written that do block operations may be affected
+	when "persistant_blocks == FALSE"!!!!!  You may have to save
+	"persistant_blocks" into a temporary variable, set it to true,
+	and then restore it when you are done.
+
+
+EDITWINDOW
+	The macro EDITWINDOW has been revamped, to work as a proper
+	dialog box.  The /NK= and /NB= switches have been removed.  If
+	you have any problems, let us know.
+
+EDIT BOX KEYS
+	The keymapping for edit boxes (in DIALOG BOXES), has been
+	revamped to be more CUA compliant.  The following lists the
+	keys (non cursor movement):
+
+		Shifted-Arrow, Home, End or Page keys:
+			Marks a stream of text block.
+
+		<ShftINS>  Inserts the contents of the paste buffer.
+		<CtrlINS>  Copies the currently marked block into the
+			   paste buffer.
+		<ShftDEL>  Cuts the currently marked block out of the
+			   edit field and into the paste buffer.
+		<CtrlDEL>  Deletes the word under and to the right of
+			   he cursor.
+		<CtrlBS>   Deletes the word to the left of the cursor.
+
+
+MAKE_LITERAL( string )		// macro string function
+	Takes the passed string and searches is for all regular
+	expression characters, adding "@" in front of them to make them
+	literal.
+
+NEW SEARCH FEATURES
+	Replaced the Find all occurrences" mode in the Search with "List
+	all occurrences".  If selected, it will search for all
+	occurrences, just as the "Find all occurrences" did, but will
+	generate a list, similar to the one for Multi-File Search.  You
+	can then select which occurrence to move to from the list.  Once
+	a search list has been created, a new button will appear in the
+	search prompt allowing you to go directly to the previously
+	created list.  You can even assign the list macro to a
+	keystroke.  The macro is called "MEUTIL2^SEARCH_LIST".  If you
+	move to another window, bring up and select from the list,  you
+	will be placed in the window from which the list was created.
+	If that window does not exist, the selection will be ignored.
+	Of course, you can create a list for the new window by invoking
+	the search.
+
+	NOTE: For the short form, in order to make it easier to remember, we
+	changed the Word/Phrase search from 'L' to 'W' and made 'L' to indicate
+	List mode.  Please check you default search settings to be sure there
+	is no problem with this change.  Also note that the switch 'N' will
+	function identically to 'L'.
+
+	We added a new option called SEARCH ALL WINDOWS.  You can now 
+	have Multi-Edit search/search and replace all open windows!
+
+COMM MODULE
+	Added login macro for our PCBoard BBS system.
+
+NEW C STUFF
+	Pressing a closing brace will automatically insert a "}" at the
+	correct indent level.
+
+	Pressing a closing paren insert a ")" and highlight to the
+	opening paren.
+
+New Template Expansion
+	See TEMPLATE.DOC for more details.
+
+New Brief Emulation Macro
+	See BRIEF.DOC for more details.
+
+ULTRAVISION SUPPORT
+	We now have extended support for ULTRAVISION.  From the Display
+	setup dialog you can specify Ultravision for the video mode,
+	and then specify the UltraVision extended mode (in hex) to use.
+	UltraVision MUST be loaded in order for the UltraVision
+	selection to be highlighted.  The UltraVision modes are as
+	follows:
+		11	80x25		22	108x43/50
+		13	80x34/36        24	108x60/63
+		12	80x43/50        31	120x25
+		14	80x60/63        39	120x36
+		19	94x25           32	120x43/50
+		1B	94x36           3A	120x63
+		1A	94x43/50        33	132x25
+		1C	94x63           3B	132x36
+		21	108x25          34	132x44/50
+		23	108x34/36       3C	132x60
+
+
+
+RESTORE NOW SAVES POSITION MARKERS
+
+CTRLSHFT and ALTSHFT key combinations now supported.  Most keys on the
+	keyboard work with CTRLSHFT and ALTSHFT keycodes.
+
+F11 and F12 function key labels now display with > 80 character video
+	modes.
+
+<CtrlSPACE> and <AltSPACE> now supported.
+
+
+NEW CMAC FUNCTIONS/VARIABLES
+
+	BLOCK_STAT is now a variable.
+
+	GET_MARK_RECORD( mark_num, group_num, var line, var col, var
+			 row, var offset );
+
+	SET_MARK_RECORD( mark_num, group_num, line, col, row, offset );
+
+	MARK_STACK_COUNT  integer variable
+
+
+MINIMIZED WINDOW STUFF
+	Minimized windows are not switched to by Next/Previous window
+	now.  Also, when you Minimize a window, you will be switched to
+	the next available window.
+
+NEW FILE PROMPT BOX!!!!
+	By popular request, the file prompt has undergone some rework.
+	There is now a separate directory/drive list.  Give it a shot!
+	Ctrl-A..Z  still work to change drives.  If you've got any
+	requests for further changes to the FILE PROMPT, this is the
+	time to get them in.
+
+ADDED EMS/XMS USAGE indicators in the EMS/XMS setup dialog box.
+
+
+MULTI-FILE SEARCH AND REPLACE!!
+	Not only can you search on disk, you can now REPLACE too!  
+	Also, we modified Multi-File Search (and Replace) so that it 
+	will search files that are already in memory if the "Search 
+	files in memory" switch is checked.
+
+NOTES ON CURRENT LINE COLOR
+	You can turn the current line color feature off by setting (in
+	the color setup menu) Current Line color and Current Line In
+	Block color to attribute 0 (black on black).
+
+
+RENAME_FILE
+	The macro function RENAME_FILE has been added.
+
+		RENAME_FILE( old_name, new_name ) {integer function}
+
+		Returns 0 for success, or DOS error code.
+
+SHIFTED CURSOR KEYS
+	The shifted grey cursor keys (and insert and delete) will now
+	be recognized correctly.  Also, you can get the shifted cursor
+	keys to be SAA/CUA compliant (mark a stream block) by assigning
+	the shifted UP, DOWN, LEFT and RIGHT keys to the macro
+	SHIFT_CURSOR (in MESYS).
+
+LAYOUT MENU
+	The LAYOUT menu has been replaced with a LAYOUT dialog box,
+	which is accessed from the Text menu.
+
+CALCULATOR
+	Made an interesting change to the calculator tape interface.
+
+MECOM
+	Added VT100 terminal emulation!  Also, interpretation of
+	display attributes (bold, blink, etc.) has been significantly
+	improved.
+
+HIGHLIGHTING THE LINE THE CURSOR IS ON
+	Added highlighting of current line.  Update color setup menu to
+	allow the configuration of these colors.  The following color
+	variables where added to the macro language:
+
+			L_Color		Current line color of current
+					window
+			LB_Color	Current line color IN A MARKED
+					BLOCK of current window
+			W_L_Color	Default value for L_Color
+			W_LB_Color	Default value for LB_Color
+
+
+CHANGING THE COLOR ATTRIBUTES OF A LINE
+	The system variable LINE_ATTR allows you to examine and change
+	the attribute of the current line.  If LINE_ATTR is 0, then the
+	line will use the default colors.
+
+		EXAMPLE:	LINE_ATTR = 93;  // Override the color
+						 //   of the current line
+
+
+30/33 LINE MODE!!!!!
+        This is pretty neat, and is MUCH more readable than 43/50 line
+        mode (though it is still available).
+
+        The following macro commands/functions have changed for this:
+
+        TOGGLE_VIDEO            No longer exists!!!!
+
+        VIDEO_MODE              Returns an integer:
+                                0 = 25 lines
+                                1 = 30/33 lines
+                                2 = 43/50 lines
+
+                                255 = #of lines overridden with /X /Y
+                                      switches.
+	SET_VIDEO_MODE( mode )  New!!
+				0 = 25 lines
+				1 = 30/33 lines
+				2 = 43/50 lines
+
+				Should NOT be used, instead use the
+				macro
+					SETUP^TGLVID /M=n
+				where "n" is the video mode to switch
+				to!
+
+
+VCS SUPPORT
+	We've done quite a bit of work on VCS support.  You will need
+	to remove the VCS init code from your STARTUP.SRC, convert it
+	to CMAC (with SRCCONV), recompile it and then reinstall your
+	VCS support.
+
+KEY MAPPING
+	You can now get into the keymap menu with 1 less keystroke,
+	thanks to a mod which places a new action button:
+	"Select new keymap" on the keymap menu itself.  Also, a bug
+	having to do with copying keymaps has been fixed.
+
+MECOM
+	You should notice improved performance and robustness
+	(is that a word?) in the com module.  The ANSI terminal
+	emulator now has support for all function and cursor keys.  One
+	gotcha is that <F1> and <F2> are assigned to help and menu, so
+	if you want ANSI emulation on those, you'll have to find other
+	keys for help and menu.
+
+AUTO-ARRANGE MINIMIZED WINDOWS(ICONS)
+	Turn this on in the "User-interface settings" dialog box.  It's
+	pretty neat!!! Check it out.  Try loading several files, and
+	then start minimizing and zooming windows.
+
+
+NEW SETUP OPTIONS
+	The following options have been added in the USER INTERFACE
+	STYLE dialog box:
+
+		"Immediately display dir in file prompts"
+		"Overlap split window borders"
+		"Auto-arrange compiler error window"
+		"Auto-arrange minimized windows"
+
+	Also, the Color Setup has been moved from Display Setup onto
+	the main Install menu.
+
+MERGE FILE FROM DISK
+	There was a bug that caused the macro SPLICE to create a gap in
+	the window letter sequence in certain cases.  This has been
+	fixed.
+
+RESTORE LINKED WINDOWS
+	There was a bug in restore that would not correctly restore
+	linked windows if more than one set of link windows existed.
+	It has been fixed.
+
+COLOR SETUP BY FILENAME EXTENSION
+	You can now have individualized window color setups based on
+	filename extensions.  Requires updating your MECONFIG.DB file.
+
+AUTO-ARRANGE THE MEERR.TMP WINDOW
+	By popular demand!!!!  If the "[ ] Auto-arrange compiler error
+	window" check box is checked (in User-Interface Style setup),
+	then the MEERR.TMP window will be auto-resized with the
+	location window the error occurred in.
+
+EDIT-NEW FILE
+	If you select "Edit new file" and the current window is empty,
+	(and it's name is still ?No-File?) then your file will be
+	loaded into the current window instead of creating a new one.
+
+NEW COLOR SETUP
+	We've completely revamped color setup.  Hope you like it.
+	Please comment.
+
+NEW DATA STRUCTURE FOR MENUS AND DIALOG BOXES
+	NOTE:  Multi-Edit is STILL FULLY COMPATIBLE with the old method
+	of setting up menus and dialog boxes.
+
+	We've create a data structure called a MENU.  You create it and
+	then access it via a handle witch is stored in an integer
+	variable.  Each MENU item that you create has 3 strings (long:
+	Up to 2048 characters) and 3 long integers associated with it.
+	When you are done with a menu, you MUST delete it, or you will
+	waste memory.
+
+	NOTE:  MENU items are currently NOT stored in virtual memory,
+	and therefore the MENU structure should not be used to create
+	large arrays.
+
+	The following macro commands have been added to support the
+	new menu structure:
+
+	MENU_CREATE  {integer function}
+		Creates a menu structure and returns a long integer
+		handle that is used to access the menu.
+
+	MENU_DELETE( handle : integer ) {procedure}
+		Deletes then menu structure referenced by "handle".
+
+	MENU_SET_ITEM( handle, item_number : INTEGER;
+		       str1, str2, str3 : STRING;
+		       int1, int2, int3 : INTEGER );  {procedure}
+		Lets you set all of a menu item's fields in one shot.
+		"Handle" must reference a menu that was created with
+		MENU_CREATE.  "Item_number" must be between 1 and 65535
+		inclusive.
+
+	MENU_SET_STR( handle, item_number, string_number : INTEGER;
+			str_value : STRING );  {procedure}
+		Sets strings 1, 2 or 3 to the string value in
+		"str_value".  "string_number" must be from 1 to 3
+		inclusive.
+
+	MENU_SET_INT( handle, item_number, int_number,
+		      int_value : INTEGER);  {procedure}
+		Same as MENU_SET_STR, but used to set integers 1
+		through 3.
+
+	MENU_ITEM_STR( handle, item_number, str_number : INTEGER );
+		{string function}
+		Returns the specified string (1 through 3 );
+
+	MENU_ITEM_INT( handle, item_number, int_number : INTEGER );
+		{integer function}
+		Returns the specified integer (1 through 3 );
+
+	The macros TOPMENU, SUBMENU and DATA_IN have been modified to
+	accept /HN=1 to tell them that RETURN_INT contains a menu
+	handle to use instead of using global variables.
+
+	For TOPMENU and SUBMENU:
+		STR1 contains the menu item title.
+		STR2 contains the quickstroke label ("<F1>", etc.)
+		STR3 contains the command line (all of the / parameters
+			like /H= or /M= or /S=)
+		INT1 may be set to 1 if the menu item is to be skipped.
+
+	For DATA_IN:
+		STR1 contains the data items title ("/T=" field).
+		STR2 contains the string variable (was
+			global_str('ISTR_'? ))
+		STR3 contains the rest of the IPARM global var.
+		INT1 contains the data type (was "/TP=")
+		INT2 contains the integer variable (IINT_).
+
+EMS/XMS memory amount.
+	By popular demand!!!!!  The "EMS/XMS Memory to use" has been
+	changed to "EMS/XMS memory to leave available", so it will use
+	all BUT the amount you specify.  This field will still contain
+	your old numbers, so you'll need to change it.
+
+KEYCODE(<ALTK>)
+	We have greatly enhanced this macro to include displaying of
+	all macro/keystroke macro/command assignments in all modes.  It
+	started out to be a diagnostic tool for tracking down key
+	assignment conflicts.  We ended up giving it a fancy display.
+
+DEFAULT FILE EXTENSIONS
+	You can configure, under Edit Settings, a list of
+	extensions; delimited by semicolons, and not including the
+	leading period.  What will happen is that if you enter a file
+	name without an extension in a load prompt or on the DOS
+	command line, the list of defaults will be searched until a
+	file with that extension is found, or gives up.
+
+WORD SEARCH
+	The Phrase search option in search/replace has been expanded to
+	function as a whole word only search if only one word is
+	entered in the search expression.
+
+SEARCH SWITCHES SHORT FORM
+	From the Search (or S&R prompt), <F5> will switch to a short
+	form that lets you enter search switches in the way version 4
+	worked.
+
+SEARCH HISTORY LIST ADDITION
+	If you bring up the history list for the Search prompts, you
+	will see the word your cursor is on OR the word that is marked
+	in the list.
+
+HELP MENU
+	The main menu now contains a Help menu.
+
+HELP BOOK MARKS
+	In help:
+		<F5>  will mark your current spot
+		<ShiftF5> will pop up a list of your book marks
+			(may also be accessed from Help menu)
+
+BINARY AND UNIX FILE EDITING
+	In Filename Extension setup you can select MSDOS, UNIX (lines
+	terminated by LF) or Binary file editing.  The "Bin rec length"
+	field allows you to specify the length of each line in a binary
+	file (since CR/LF is ignored).
+
+DEFAULT VALUES FOR .DB RECORDS
+	/DDEF=str can be added to the header lines of a .DB file in
+	order to give fields default values when an INSERT (create
+	record) is done.
+
+CLIPPER COMPILER SUPPORT
+	There has been some confusion about the 2 most recent versions
+	of Clipper support.  To avoid this confusion, we have
+	eliminated the program type CLIPPER, and replaced it with:
+	CLIPPER S87
+	CLIPPER 5
+	If this is relevant, please alter your extension setup to
+	reflect these changes.
+
+>>>>>>>>>>> IMPORTANT <<<<<<<<<<<<<<<<<
+	.MAC file location.
+
+	.MAC files may now be placed in a subdirectory of the
+	Multi-Edit subdirectory called MAC.  This is the first place
+	Multi-Edit will look for macro files, so it is the fastest.
+	Also, SETUP has been modified to put the INIT.MAC and
+	KEYMAC.MAC files in the subdirectory if it exists.
+
+DOS SHELL
+	The name has been changed to FILE MANAGER to be more consistent 
+	to CUA standards.
+
+NEW SCREEN LAYOUT
+	Because of the new VMM, the Mem indicator on the status line
+	became worse than obsolete, so we removed it.  This prompted us
+	to redesign the layout.  We've combined the message and status
+	lines, updated the main menu, and managed to free up one more
+	line for editing.
+
+NEW MENU LAYOUTS
+	Because of the above, some of the menus where redesigned.  In
+	particular, the Install menu is accessed from Other, and the
+	Search and Cursor menus where combined. We've also added Edit
+	and Help menus.
+
+NO MORE "SWAP METHOD" IN COMPILER OR USER MENU SETUPS
+	We determined that it was easier and safer, to just set it in
+	one place, in the Install menu.
+
+WINDOW MENU NOW HAS ORGANIZE SELECTION
+	This will pop up a submenu that allows you to Tile, Cascade and
+	Minimize all windows.
+
+MINIMIZE BUTTON
+	The little down arrow on the corner of the window lets you
+	minimize instantly, while the little up arrow zooms.
+
+DOUBLE CLICK ON WINDOW LETTER TO CLOSE
+	If you double click on the window letter, the window will
+	close.
+
+NEW PRINTER SETUPS
+	The printer driver/setups have been redone and are much more
+	flexible.  Check it out!
+
+LOGO SCREEN IS GONE.
+	Yeah!!!!  See the About selection in the File menu
+
+PRINT MENU GONE
+	It is now a dialog box accessed from the File menu
