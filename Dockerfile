@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Pavlo Gulchuk <gulhappy@gmail.com>
+MAINTAINER Pavlo Gulchuk <gulkiev@gmail.com>
 RUN apt-get update && \
     apt-get -y -u dist-upgrade && \
     apt-get -y --no-install-recommends install \
